@@ -18,9 +18,9 @@ export default defineConfig({
           "**/*.{js,css,html,ico,png,svg,json,vue,txt,woff,woff2}",
         ],
       },
-      devOptions: {
-        enabled: true,
-      },
+      // devOptions: {
+      //   enabled: true,
+      // },
       manifest: {
         name: "Potadi App",
         short_name: "Potadi",

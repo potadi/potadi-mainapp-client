@@ -46,7 +46,7 @@
 
         <!--begin::Col-->
         <div class="col-lg-8 d-flex align-items-center">
-          <span class="fw-bold fs-6 me-2">{{ user.email }}</span>
+          <span class="fw-bold fs-6 me-2">{{ user?.email }}</span>
         </div>
         <!--end::Col-->
       </div>
@@ -60,7 +60,7 @@
 
         <!--begin::Col-->
         <div class="col-lg-8 d-flex align-items-center">
-          <span class="fw-bold fs-6 me-2">{{ user.username }}</span>
+          <span class="fw-bold fs-6 me-2">{{ user?.username }}</span>
         </div>
         <!--end::Col-->
       </div>

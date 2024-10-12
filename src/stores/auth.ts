@@ -8,6 +8,7 @@ export interface User {
   username: string;
   email: string;
   password: string;
+  registration_method: string;
   avatar: string;
 }
 

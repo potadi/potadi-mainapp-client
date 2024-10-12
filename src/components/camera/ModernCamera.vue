@@ -18,7 +18,7 @@ const video = ref<HTMLVideoElement>();
 const canvas = ref<HTMLCanvasElement>();
 const capturedImage = ref<string | null>(null);
 const { stream, enabled } = useUserMedia({
-  constraints: { video: { deviceId: currentCamera } },
+  constraints: { video: { deviceId: currentCamera.value } },
 });
 
 watchEffect(() => {
