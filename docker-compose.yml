@@ -1,0 +1,21 @@
+name: potadiapp-frontend
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: always
+    ports:
+      - '5173:5173'
+    env_file:
+      - .env
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    networks:
+      - potadi-net
+
+networks:
+  potadi-net:
+    driver: bridge
