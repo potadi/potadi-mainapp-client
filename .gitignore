@@ -32,3 +32,5 @@ coverage
 
 .env
 .env.prod
+
+vercel.json
