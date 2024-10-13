@@ -29,9 +29,15 @@
           <span>The result may be wrong. Check for more info.</span>
         </p>
 
-        <a href="#" :class="`btn-${btnColor}`" class="btn w-100 py-3">
+        <button
+          type="button"
+          :class="`btn-${btnColor}`"
+          class="btn w-100 py-3"
+          data-bs-toggle="modal"
+          data-bs-target="#kt_modal_start_diagnose"
+        >
           {{ t("rediagnose") }}
-        </a>
+        </button>
       </div>
     </div>
     <!--end::Body-->
@@ -98,50 +104,6 @@ export default defineComponent({
           },
         },
       },
-      // responsive: [
-      //   {
-      //     breakpoint: 1024, // Adjust for larger screens
-      //     options: {
-      //       plotOptions: {
-      //         radialBar: {
-      //           dataLabels: {
-      //             style: {
-      //               fontSize: "6rem", // Font size for larger screens
-      //             },
-      //           },
-      //         },
-      //       },
-      //     },
-      //   },
-      //   {
-      //     breakpoint: 768, // Adjust for tablet screens
-      //     options: {
-      //       plotOptions: {
-      //         radialBar: {
-      //           dataLabels: {
-      //             value: {
-      //               fontSize: "6rem", // Font size for tablets
-      //             },
-      //           },
-      //         },
-      //       },
-      //     },
-      //   },
-      //   {
-      //     breakpoint: 480, // Adjust for mobile screens
-      //     options: {
-      //       plotOptions: {
-      //         radialBar: {
-      //           dataLabels: {
-      //             value: {
-      //               fontSize: "6rem", // Font size for mobile
-      //             },
-      //           },
-      //         },
-      //       },
-      //     },
-      //   },
-      // ],
       colors: [getColorForLabel(label)],
       stroke: {
         lineCap: "round",
