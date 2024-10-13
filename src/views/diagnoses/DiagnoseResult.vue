@@ -60,9 +60,9 @@ export default defineComponent({
     const { selectedDiagnose } = storeToRefs(store);
 
     const formatDiagnose = (data: IDiagnoses | null): IDiagnoses => {
-      const imageName = getImageName(data.image || "");
-      const confidence = data.confidence;
-      const formattedDate = moment(data.created_at, moment.ISO_8601).format(
+      const imageName = getImageName(data?.image || "");
+      const confidence = data?.confidence;
+      const formattedDate = moment(data?.created_at, moment.ISO_8601).format(
         "D MMMM YYYY, h:mm A"
       );
 
@@ -70,7 +70,7 @@ export default defineComponent({
         let status: string = "";
         let color: string = "";
 
-        switch (data.label) {
+        switch (data?.label) {
           case "healthy":
             status = "Healthy";
             color = "success";
@@ -93,13 +93,13 @@ export default defineComponent({
       };
 
       const formattedData = {
-        id: data.id,
-        image: data.image,
+        id: data?.id,
+        image: data?.image,
         imageName,
         label: label(),
         confidence,
-        details: data.details,
-        uuid: data.uuid,
+        details: data?.details,
+        uuid: data?.uuid,
         created_at: formattedDate,
       };
 
