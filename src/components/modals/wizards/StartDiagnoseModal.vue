@@ -188,7 +188,7 @@
             <!--begin::Form-->
 
             <!--begin::Input group-->
-            <div class="mb-10">
+            <div class="mb-10 fv-row">
               <ModernCamera ref="cameraRef" />
             </div>
             <!--end::Input group-->
@@ -200,7 +200,7 @@
               aria-label="Form actions"
             >
               <button
-                type="button"
+                type="reset"
                 @click="state = ''"
                 class="btn btn-light me-3"
                 :disabled="isSubmitting"
@@ -212,14 +212,12 @@
                 ref="submitMobileButtonRef"
                 type="submit"
                 class="btn btn-primary"
-                @click="submitCapturedImage"
+                @click="submitCapturedImage()"
                 :disabled="isSubmitting"
                 aria-live="polite"
               >
-                <span class="indicator-label" v-if="!isSubmitting">
-                  Submit
-                </span>
-                <span class="indicator-progress" v-else>
+                <span class="indicator-label"> Submit </span>
+                <span class="indicator-progress">
                   Please wait...
                   <span
                     class="spinner-border spinner-border-sm align-middle ms-2"
@@ -271,14 +269,16 @@ export default defineComponent({
     const state = ref("");
     const store = useDiagnoseStore();
 
-    const setButtonState = (disabled, indicator = false) => {
-      if (submitAuthCodeButtonRef.value) {
-        submitAuthCodeButtonRef.value.disabled = disabled;
-        submitAuthCodeButtonRef.value[
-          indicator ? "setAttribute" : "removeAttribute"
-        ]("data-kt-indicator", "on");
+    const setButtonState = (buttonRef, disabled, indicator = false) => {
+      if (buttonRef.value) {
+        buttonRef.value.disabled = disabled;
+        buttonRef.value[indicator ? "setAttribute" : "removeAttribute"](
+          "data-kt-indicator",
+          "on"
+        );
       }
     };
+
     const showErrorAlert = (text) => {
       Swal.fire({
         text,
@@ -326,7 +326,7 @@ export default defineComponent({
     const submitImageForm = async () => {
       if (!submitAuthCodeButtonRef.value || !dropzoneRef.value) return;
 
-      setButtonState(true, true);
+      setButtonState(submitAuthCodeButtonRef, true, true);
       isSubmitting.value = true;
 
       try {
@@ -342,12 +342,11 @@ export default defineComponent({
             return;
           }
         }
-
         showErrorAlert("The image is not clear enough. Please try again.");
       } catch (error) {
         showErrorAlert("Error uploading image.");
       } finally {
-        setButtonState(false);
+        setButtonState(submitAuthCodeButtonRef, false);
         isSubmitting.value = false;
       }
     };
@@ -360,7 +359,7 @@ export default defineComponent({
         return;
       }
 
-      setButtonState(true, true);
+      setButtonState(submitMobileButtonRef, true, true);
       isSubmitting.value = true;
 
       try {
@@ -370,18 +369,23 @@ export default defineComponent({
         const formData = new FormData();
         formData.append("image", blob, "captured_image.jpg");
 
-        const response = await ApiServices.post("diagnose/", formData);
+        const detect = await Detection(formData.get("image"));
+        const confidence = detect.predictions[0]?.confidence.toFixed(2);
 
-        if (response.status === 201) {
-          store.setSelectedDiagnose(response.data);
-          hideModal(diagnoseModalRef.value);
-          router.replace({ name: "diagnose-result" });
-          return;
+        if (confidence >= 0.78) {
+          const response = await ApiServices.post("diagnose/", formData);
+          if (response.status === 201) {
+            store.setSelectedDiagnose(response.data);
+            hideModal(diagnoseModalRef.value);
+            router.replace({ name: "diagnose-result" });
+            return;
+          }
         }
+        showErrorAlert("The image is not clear enough. Please try again.");
       } catch (error) {
         showErrorAlert("Error uploading image.");
       } finally {
-        setButtonState(false);
+        setButtonState(submitMobileButtonRef, false);
         isSubmitting.value = false;
       }
     };
