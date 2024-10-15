@@ -253,7 +253,7 @@ export default defineComponent({
             await Promise.all(
               selectedIds.value.map(async (id) => {
                 const response = await ApiService.delete(`/diagnose/${id}/`);
-                if (response.status === 204) {
+                if (response.status === 200) {
                   const index = tableData.value.findIndex(
                     (item) => item.id === id
                   );
@@ -288,7 +288,7 @@ export default defineComponent({
         if (result.isConfirmed) {
           try {
             const response = await ApiService.delete(`/diagnose/${id}/`);
-            if (response.status === 204) {
+            if (response.status === 200) {
               const index = tableData.value.findIndex((item) => item.id === id);
               tableData.value.splice(index, 1);
               MenuComponent.reinitialization();
