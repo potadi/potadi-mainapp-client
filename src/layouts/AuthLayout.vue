@@ -1,20 +1,26 @@
 <template>
   <!--begin::Authentication Layout -->
   <div
-    class="d-flex flex-column justify-content-center align-items-center min-vh-100 bgi-size-cover bgi-position-center"
+    class="d-flex flex-column flex-center flex-row-fluid"
     :style="`background-image: url('${getAssetPath(
       'media/background/bg-auth.svg'
     )}')`"
   >
-    <!--begin::Form-->
-    <div class="w-100 p-3">
-      <!--begin::Wrapper-->
-      <div class="mx-auto w-lg-500px bg-white rounded shadow-sm">
-        <router-view></router-view>
+    <!--begin::Body-->
+    <div class="d-flex flex-column flex-grow-1">
+      <!--begin::Form-->
+      <div class="d-flex flex-center flex-column flex-grow-1">
+        <!--begin::Wrapper-->
+        <div
+          class="bg-body rounded justify-content-center shadow-lg p-sm-5 my-10"
+        >
+          <router-view></router-view>
+        </div>
+        <!--end::Wrapper-->
       </div>
-      <!--end::Wrapper-->
+      <!--end::Form-->
     </div>
-    <!--end::Form-->
+    <!--end::Body-->
   </div>
   <!--end::Authentication Layout -->
 </template>
