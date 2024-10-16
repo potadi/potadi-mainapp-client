@@ -12,7 +12,7 @@ services:
       - .env
     volumes:
       - ./src:/app/src
-      - /app/node_modules
+      - ./public:/app/public
     networks:
       - potadi-net
 

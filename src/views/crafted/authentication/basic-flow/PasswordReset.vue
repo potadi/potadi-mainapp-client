@@ -57,7 +57,7 @@
           </span>
         </button>
 
-        <router-link to="/sign-in" class="btn btn-lg btn-light-primary fw-bold"
+        <router-link to="/sign-in" class="btn btn-lg btn-light-danger fw-bold"
           >Cancel</router-link
         >
       </div>

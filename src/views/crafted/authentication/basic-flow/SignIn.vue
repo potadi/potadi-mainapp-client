@@ -7,10 +7,6 @@
       id="kt_login_signin_form"
       @submit="onSubmitLogin"
       :validation-schema="login"
-      :initial-values="{
-        email: 'usertesting1@example.com',
-        password: 'usertesting1',
-      }"
     >
       <!--begin::Heading-->
       <div class="text-center mb-10">
@@ -43,7 +39,7 @@
           type="text"
           name="email"
           autocomplete="off"
-          placeholder="Email"
+          placeholder="Email Address"
         />
         <!--end::Input-->
         <div class="fv-plugins-message-container">
@@ -210,8 +206,6 @@ export default defineComponent({
     //Form submit function
     const onSubmitLogin = async (values: any) => {
       values = values as User;
-      // Clear existing errors
-      // store.logout();
 
       if (submitButton.value) {
         // eslint-disable-next-line
