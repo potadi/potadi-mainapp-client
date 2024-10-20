@@ -14,21 +14,18 @@
         class="d-flex align-items-center flex-grow-1 flex-lg-grow-0 me-lg-15"
       >
         <router-link to="/">
-          <img
-            v-if="themeMode === 'light' && layout === 'light-header'"
-            alt="Logo"
-            :src="getAssetPath('media/logos/default.svg')"
-            class="h-20px h-lg-30px app-sidebar-logo-default theme-light-show"
-          />
-          <img
-            v-if="
-              layout === 'dark-header' ||
-              (themeMode === 'dark' && layout === 'light-header')
-            "
-            alt="Logo"
-            :src="getAssetPath('media/logos/default-dark.svg')"
-            class="h-20px h-lg-30px app-sidebar-logo-default"
-          />
+          <div class="d-flex align-items-center">
+            <img
+              alt="Logo"
+              :src="getAssetPath('media/logos/default-leaf.png')"
+              class="h-35px app-sidebar-logo-default"
+            />
+            <p class="mb-0 ms-2">
+              <span class="fw-bolder fs-2 text-white app-sidebar-logo-default">
+                Potadi
+              </span>
+            </p>
+          </div>
         </router-link>
       </div>
       <template v-else>
@@ -51,8 +48,8 @@
           <router-link to="/" class="d-lg-none">
             <img
               alt="Logo"
-              :src="getAssetPath('media/logos/default-small.svg')"
-              class="h-30px"
+              :src="getAssetPath('media/logos/default-leaf.png')"
+              class="h-35px"
             />
           </router-link>
         </div>

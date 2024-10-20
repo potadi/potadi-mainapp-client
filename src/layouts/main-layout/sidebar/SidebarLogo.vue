@@ -3,25 +3,24 @@
   <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
     <!--begin::Logo image-->
     <router-link to="/">
+      <div class="d-flex flex-row align-items-center gap-2">
+        <img
+          alt="Logo"
+          :src="getAssetPath('media/logos/default-leaf.png')"
+          class="h-35px app-sidebar-logo-default"
+        />
+        <p class="mb-0 mt-2">
+          <span
+            class="varela-round-regular fw-bolder text-white app-sidebar-logo-default"
+          >
+            Potadi
+          </span>
+        </p>
+      </div>
       <img
-        v-if="
-          layout === 'dark-sidebar' ||
-          (themeMode === 'dark' && layout === 'light-sidebar')
-        "
         alt="Logo"
-        :src="getAssetPath('media/logos/default-dark.svg')"
-        class="h-25px app-sidebar-logo-default"
-      />
-      <img
-        v-if="themeMode === 'light' && layout === 'light-sidebar'"
-        alt="Logo"
-        :src="getAssetPath('media/logos/default.svg')"
-        class="h-25px app-sidebar-logo-default"
-      />
-      <img
-        alt="Logo"
-        :src="getAssetPath('media/logos/default-small.svg')"
-        class="h-20px app-sidebar-logo-minimize"
+        :src="getAssetPath('media/logos/default-leaf.png')"
+        class="h-35px mb-2 app-sidebar-logo-minimize"
       />
     </router-link>
     <!--end::Logo image-->
@@ -81,3 +80,12 @@ onMounted(() => {
   }, 1);
 });
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+.varela-round-regular {
+  font-family: "Varela Round", sans-serif;
+  font-size: 1.8rem;
+  font-style: normal;
+}
+</style>

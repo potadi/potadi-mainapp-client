@@ -1,9 +1,9 @@
 <template>
   <!--begin::Authentication Layout -->
   <div
-    class="d-flex flex-column flex-center flex-row-fluid"
+    class="d-flex flex-column flex-center flex-row-fluid bgi-size-cover bgi-position-center"
     :style="`background-image: url('${getAssetPath(
-      'media/background/bg-auth.svg'
+      'media/background/auth-bg-2.jpg'
     )}')`"
   >
     <!--begin::Body-->

@@ -5,7 +5,7 @@
     id="kt_app_sidebar_footer"
   >
     <span
-      class="dongle-regular d-flex justify-content-center text-white overflow-hidden"
+      class="dongle-regular d-flex justify-content-center text-white text-nowrap overflow-hidden"
     >
       Made with <span class="fs-6 pt-2">❤️</span> by dev team.
     </span>
