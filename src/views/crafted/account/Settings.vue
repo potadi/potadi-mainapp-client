@@ -385,14 +385,14 @@
     <div id="kt_account_connected_accounts" class="collapse show">
       <div class="card-body border-top p-9">
         <div class="py-2">
-          <div class="d-flex flex-stack">
-            <div class="d-flex">
+          <div class="d-flex flex-column flex-sm-row align-items-start gap-4">
+            <div class="d-flex flex-grow-1 min-w-0">
               <img
                 :src="getAssetPath('media/svg/brand-logos/google-icon.svg')"
-                class="w-30px me-6"
+                class="w-30px h-30px me-6"
                 alt=""
               />
-              <div class="d-flex flex-column">
+              <div class="d-flex flex-column min-w-0">
                 <span class="fs-5 text-dark fw-bold">Google</span>
                 <div
                   v-if="!socialAccount.google.is_connected"
@@ -404,19 +404,22 @@
                   <div
                     v-for="item in socialAccount.google.data"
                     :key="item.id"
-                    class="d-flex justify-content-between align-items-center mb-2"
+                    class="d-flex flex-wrap gap-2 align-items-center mb-2"
                   >
-                    <span class="text-truncate" style="max-width: 80%">
+                    <span
+                      class="text-truncate flex-grow-1 min-w-0"
+                      style="max-width: 300px"
+                    >
                       {{ item.email }}
                     </span>
-                    <span class="badge bg-success text-white ms-2">
+                    <span class="badge bg-success text-white flex-shrink-0">
                       Connected
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="d-flex flex-column align-items-end">
+            <div class="d-flex flex-column flex-shrink-0">
               <div v-if="!socialAccount.google.is_connected">
                 <button
                   type="button"
@@ -449,96 +452,6 @@
     <!--end::Content-->
   </div>
   <!--end::Connected Accounts-->
-
-  <!--begin::Deactivate Account-->
-  <div class="card mb-5 mb-xl-10">
-    <!--begin::Card header-->
-    <div
-      class="card-header border-0 cursor-pointer"
-      role="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#kt_account_deactivate"
-      aria-expanded="true"
-      aria-controls="kt_account_deactivate"
-    >
-      <div class="card-title m-0">
-        <h3 class="fw-bolder m-0">Deactivate Account</h3>
-      </div>
-    </div>
-    <!--end::Card header-->
-
-    <!--begin::Content-->
-    <div id="kt_account_deactivate" class="collapse show">
-      <!--begin::Card body-->
-      <div class="card-body border-top p-9">
-        <div
-          class="notice d-flex bg-light-warning rounded border-warning border border-dashed mb-9 p-6"
-        >
-          <KTIcon
-            icon-name="information-5"
-            icon-class="fs-2tx text-warning me-4"
-          />
-          <!--begin::Wrapper-->
-          <div class="d-flex flex-stack flex-grow-1">
-            <!--begin::Content-->
-            <div class="fw-semibold">
-              <h4 class="text-gray-800 fw-bold">
-                You Are Deactivating Your Account
-              </h4>
-
-              <div class="fs-6 text-gray-600">
-                For extra security, this requires you to confirm your email or
-                phone number when you reset yousignr password. <br /><a
-                  class="fw-bold"
-                  href="#"
-                  >Learn more</a
-                >
-              </div>
-            </div>
-            <!--end::Content-->
-          </div>
-          <!--end::Wrapper-->
-        </div>
-
-        <!--begin::Form input row-->
-        <div class="form-check form-check-solid fv-row">
-          <input
-            name="deactivate"
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="deactivate"
-          />
-          <label class="form-check-label fw-semibold ps-2 fs-6" for="deactivate"
-            >Confirm Account Deactivation</label
-          >
-        </div>
-        <!--end::Form input row-->
-      </div>
-      <!--end::Card body-->
-
-      <!--begin::Card footer-->
-      <div class="card-footer d-flex justify-content-end py-6 px-9">
-        <button
-          id="kt_account_deactivate_account_submit"
-          ref="submitButton2"
-          type="submit"
-          class="btn btn-danger fw-semibold"
-        >
-          <span class="indicator-label"> Deactivate Account </span>
-          <span class="indicator-progress">
-            Please wait...
-            <span
-              class="spinner-border spinner-border-sm align-middle ms-2"
-            ></span>
-          </span>
-        </button>
-      </div>
-      <!--end::Card footer-->
-    </div>
-    <!--end::Content-->
-  </div>
-  <!--end::Deactivate Account-->
 </template>
 
 <script lang="ts">
