@@ -1,56 +1,91 @@
 <template>
   <!--begin::Row-->
-  <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-    <!--begin::Col-->
-    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-      <Widget1
-        className="h-md-50 mb-5 mb-xl-10"
-        description="Active Projects"
-        bgColor="#F1416C"
-        :bgImage="getAssetPath('media/patterns/vector-1.png')"
-      />
-
-      <Widget2
-        className="h-md-50 mb-5 mb-xl-10"
-        :icon="false"
-        stats="357"
-        description="Professionals"
-        labelColor="dark"
-        textColor="gray-300"
-      />
+  <!-- Title -->
+  <div>
+    <h1 class="fs-1hx fw-bolder mb-5">{{ t("dashboardPage.subtitle1") }}</h1>
+  </div>
+  <div class="row g-5 g-xl-8">
+    <div class="col-xl-4">
+      <StatisticsWidget5
+        widget-classes="card-xl-stretch mb-xl-8"
+        icon-name="tablet-ok"
+        color="success"
+        icon-color="white"
+        title="Healthy"
+        :description="`Total Diagnosis: ${description.healthy}`"
+      ></StatisticsWidget5>
     </div>
-    <!--end::Col-->
 
-    <!--begin::Col-->
-    <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-      <Widget3 className="h-md-50 mb-5 mb-xl-10" :chartSize="70" />
-
-      <Widget4 className="h-lg-50" />
+    <div class="col-xl-4">
+      <StatisticsWidget5
+        widget-classes="card-xl-stretch mb-xl-8"
+        icon-name="tablet-down"
+        color="warning"
+        icon-color="white"
+        title="Early Blight"
+        :description="`Total Diagnosis: ${description.early_blight}`"
+      ></StatisticsWidget5>
     </div>
-    <!--end::Col-->
+
+    <div class="col-xl-4">
+      <StatisticsWidget5
+        widget-classes="card-xl-stretch mb-5 mb-xl-8"
+        icon-name="tablet-delete"
+        color="danger"
+        icon-color="white"
+        title="Late Blight"
+        :description="`Total Diagnosis: ${description.late_blight}`"
+      ></StatisticsWidget5>
+    </div>
   </div>
   <!--end::Row-->
+
+  <div class="separator my-10"></div>
 </template>
 
 <script lang="ts">
 import { getAssetPath } from "@/core/helpers/assets";
-import { defineComponent } from "vue";
-import Widget1 from "@/components/dashboard-default-widgets/Widget1.vue";
-import Widget2 from "@/components/dashboard-default-widgets/Widget2.vue";
-import Widget3 from "@/components/dashboard-default-widgets/Widget3.vue";
-import Widget4 from "@/components/dashboard-default-widgets/Widget4.vue";
+import { defineComponent, onMounted, ref } from "vue";
+import StatisticsWidget5 from "@/components/widgets/statsistics/Widget5.vue";
+import ApiService from "@/core/services/ApiService";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "main-dashboard",
   components: {
-    Widget1,
-    Widget2,
-    Widget3,
-    Widget4,
+    StatisticsWidget5,
   },
   setup() {
+    const { t } = useI18n();
+
+    const description = ref({
+      healthy: 0,
+      early_blight: 0,
+      late_blight: 0,
+    });
+
+    const fetchTotalDiseases = async () => {
+      try {
+        const { status, data } = await ApiService.get("/diagnose/count");
+        if (status === 200) {
+          data.forEach((item) => {
+            const { label, count } = item;
+            description.value[label] = count;
+          });
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    onMounted(() => {
+      fetchTotalDiseases();
+    });
+
     return {
+      description,
       getAssetPath,
+      t,
     };
   },
 });
