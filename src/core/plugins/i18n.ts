@@ -3,6 +3,9 @@ import { createI18n } from "vue-i18n";
 const messages = {
   en: {
     dashboard: "Dashboard",
+    dashboardPage: {
+      subtitle1: "Summary of Diagnosis",
+    },
     diagnose: "Diagnose",
     rediagnose: "Re-diagnose",
     startDiagnoseTitleFirst: "Try Diagnose Your Plants with our",
@@ -103,6 +106,9 @@ const messages = {
   },
   id: {
     dashboard: "Dasbor",
+    dashboardPage: {
+      subtitle1: "Ringkasan Diagnosa",
+    },
     diagnose: "Diagnosa",
     rediagnose: "Diagnosa Ulang",
     startDiagnoseTitleFirst: "Coba Diagnosa Tanaman Anda dengan",

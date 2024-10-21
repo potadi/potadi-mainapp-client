@@ -1,6 +1,6 @@
 <template>
   <!--begin::Statistics Widget 5-->
-  <a href="#" :class="[widgetClasses, `bg-${color}`]" class="card hoverable">
+  <div :class="[widgetClasses, `bg-${color}`]" class="card hoverable">
     <!--begin::Body-->
     <div class="card-body">
       <KTIcon
@@ -12,12 +12,12 @@
         {{ title }}
       </div>
 
-      <div :class="`text-inverse-${color}`" class="fw-semibold fs-7">
+      <div :class="`text-inverse-${color}`" class="fw-semibold fs-6">
         {{ description }}
       </div>
     </div>
     <!--end::Body-->
-  </a>
+  </div>
   <!--end::Statistics Widget 5-->
 </template>
 

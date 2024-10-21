@@ -28,17 +28,21 @@
           class="d-flex justify-content-end"
           data-kt-customer-table-toolbar="base"
         >
-          <!--begin::Export-->
+          <!--begin::Filter-->
           <button
             type="button"
-            class="btn btn-light-primary me-3"
-            data-bs-toggle="modal"
-            data-bs-target="#kt_customers_export_modal"
+            class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
+            data-kt-menu-trigger="click"
+            data-kt-menu-placement="bottom-end"
+            data-kt-menu-flip="top-end"
           >
-            <KTIcon icon-name="exit-up" icon-class="fs-2" />
-            Export
+            <KTIcon icon-name="filter" icon-class="fs-1" />
           </button>
-          <!--end::Export-->
+          <FilterDropdown
+            @filter-applied="handleFilter"
+            @filter-reset="handleFilterReset"
+          />
+          <!--end::Filter-->
         </div>
         <!--end::Toolbar-->
         <!--begin::Group actions-->
@@ -172,11 +176,17 @@ import ApiService from "@/core/services/ApiService";
 import arraySort from "array-sort";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import moment from "moment";
+import FilterDropdown from "@/components/dropdown/FilterDropdown.vue";
+
+interface FilterData {
+  status: string;
+}
 
 export default defineComponent({
   name: "history-page",
   components: {
     Datatable,
+    FilterDropdown,
   },
   setup() {
     const tableHeader = ref([
@@ -263,7 +273,7 @@ export default defineComponent({
                 }
               })
             );
-            MenuComponent.reinitialization();
+            initializeMenu();
             Swal.fire("Deleted!", "Your files have been deleted.", "success");
           } catch (error) {
             Swal.fire("Error!", "Something went wrong", "error");
@@ -291,7 +301,7 @@ export default defineComponent({
             if (response.status === 200) {
               const index = tableData.value.findIndex((item) => item.id === id);
               tableData.value.splice(index, 1);
-              MenuComponent.reinitialization();
+              initializeMenu();
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
             }
           } catch (error) {
@@ -313,7 +323,7 @@ export default defineComponent({
         }
         tableData.value.splice(0, tableData.value.length, ...results);
       }
-      MenuComponent.reinitialization();
+      initializeMenu();
     };
 
     const searchingFunc = (obj: any, value: string): boolean => {
@@ -337,6 +347,23 @@ export default defineComponent({
     };
     const onItemSelect = (selectedItems: Array<number>) => {
       selectedIds.value = selectedItems;
+    };
+
+    const handleFilter = (filterData: FilterData) => {
+      tableData.value = initDiagnoses.value.filter((item) => {
+        if (!filterData.status) return true;
+        return (
+          typeof item.label === "object" &&
+          item.label.status.toLowerCase().replace(/ /g, "_") ===
+            filterData.status
+        );
+      });
+      initializeMenu();
+    };
+
+    const handleFilterReset = () => {
+      tableData.value = [...initDiagnoses.value];
+      initializeMenu();
     };
 
     onMounted(async () => {
@@ -399,6 +426,8 @@ export default defineComponent({
       deleteFewData,
       sort,
       onItemSelect,
+      handleFilter,
+      handleFilterReset,
       getAssetPath,
     };
   },
