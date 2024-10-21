@@ -39,9 +39,55 @@ export default defineConfig({
       },
       workbox: {
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3 MiB
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com/,
+            handler: "StaleWhileRevalidate",
+            options: {
+              cacheName: "google-fonts-stylesheets",
+            },
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.gstatic\.com/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "google-fonts-webfonts",
+              expiration: {
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+                maxEntries: 30,
+              },
+            },
+          },
+          {
+            urlPattern: /\.(?:png|gif|jpg|jpeg|webp|svg)$/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "images",
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+              },
+            },
+          },
+          {
+            urlPattern: /\.(?:js|css)$/,
+            handler: "StaleWhileRevalidate",
+          },
+          {
+            urlPattern: /^https:\/\/potadi\.ai/,
+            handler: "NetworkFirst",
+            options: {
+              cacheName: "api",
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24, // 1 Day
+              },
+            },
+          },
+        ],
       },
       devOptions: {
-        enabled: true,
+        enabled: process.env.NODE_ENV === "development",
       },
     }),
   ],
@@ -60,18 +106,17 @@ export default defineConfig({
         manualChunks: {
           vue: ["vue", "vue-i18n", "vue-router"],
           axios: ["axios"],
-          lodash: ["lodash"],
         },
       },
     },
     chunkSizeWarningLimit: 1000,
   },
-  // server: {
-  //   watch: {
-  //     usePolling: true,
-  //   },
-  // },
+  server: {
+    watch: {
+      usePolling: process.env.NODE_ENV === "development",
+    },
+  },
   optimizeDeps: {
-    include: ["vue", "vue-router", "vue-i18n", "lodash", "axios"],
+    include: ["vue", "vue-router", "vue-i18n", "axios"],
   },
 });
